@@ -1,0 +1,137 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Product Seo Exporter API",
+    "description": "API for seo exporter data",
+    "version": "1.0.0"
+  },
+  "host": "product-seo-test-sit.endpoints.sit-product-work-run-60d2.cloud.goog",
+  "servers": [
+    {
+      "url": "http://localhost:8075",
+      "description": "Generated server url"
+    }
+  ],
+  "security": [
+    {
+      "api_key": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "debug-controller",
+      "description": "End-points for local development and testing purposes"
+    },
+    {
+      "name": "export-controller",
+      "description": "End-points for retrieving SEO related data"
+    }
+  ],
+  "paths": {
+    "/p/debug/execute/sitemap/import": {
+      "post": {
+        "tags": [
+          "debug-controller"
+        ],
+        "summary": "Execute the SITEMAP import/generation",
+        "operationId": "sitemapImport",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/p/export/{country}/{language}/{fileName}": {
+      "get": {
+        "tags": [
+          "export-controller"
+        ],
+        "summary": "Downloads a specific file (sitemap) from gcp bucket for a given country/language combination",
+        "operationId": "downloadFile",
+        "parameters": [
+          {
+            "name": "country",
+            "in": "path",
+            "description": "Shortcode for country, e.g. \"DE\"",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "language",
+            "in": "path",
+            "description": "Shortcode for language, e.g. \"de\"",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "path",
+            "description": "Sitemaps are identified by product_sitemap{\\d*}.xml.gz ",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/p/export/sitemap/{country}/{language}": {
+      "get": {
+        "tags": [
+          "export-controller"
+        ],
+        "summary": "Retrieves the current product sitemap index for a given country/language combination",
+        "operationId": "sitemap",
+        "parameters": [
+          {
+            "name": "country",
+            "in": "path",
+            "description": "Shortcode for country, e.g. \"DE\"",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "language",
+            "in": "path",
+            "description": "Shortcode for language, e.g. \"de\"",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "api_key": {
+        "type": "apiKey",
+        "name": "key",
+        "in": "query"
+      }
+    }
+  }
+}
